@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -24,6 +25,10 @@ fun AnimatedSplashScreen(navController: NavHostController) {
         mutableStateOf(false)
     }
 
+    val firstTime = rememberSaveable {
+        mutableStateOf(true)
+    }
+
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(
@@ -34,8 +39,14 @@ fun AnimatedSplashScreen(navController: NavHostController) {
     LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(4000)
-        navController.popBackStack()
-        navController.navigate(SplashScreens.Home.route)
+        if(firstTime.value){
+            navController.popBackStack()
+            navController.navigate(SplashScreens.Home.route)
+        } else {
+            navController.popBackStack()
+            navController.navigate(SplashScreens.Login.route)
+        }
+        firstTime.value = false
     }
     Splash(alpha = alphaAnim.value)
 }
