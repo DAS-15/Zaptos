@@ -18,7 +18,7 @@ fun SetupNavGraph(
         startDestination = SplashScreens.Splash.route
     ) {
         composable(route = SplashScreens.Splash.route) {
-            AnimatedSplashScreen(navController = navController)
+            AnimatedSplashScreen(navController = navController, context)
         }
         composable(route = SplashScreens.Home.route) {
             OnBoardingScreen(navController = navController, context = context)

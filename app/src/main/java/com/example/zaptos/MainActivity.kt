@@ -1,5 +1,7 @@
 package com.example.zaptos
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,9 +40,17 @@ class MainActivity : ComponentActivity() {
                             darkIcons = useDarkIcons
                         )
 
-                        val navController = rememberNavController()
-                        SetupNavGraph(navController = navController, this)
+                        val sharedPreference = getSharedPreferences("PREFERENCE_NAME",
+                            Context.MODE_PRIVATE)
+                        var editor = sharedPreference.edit()
 
+                        if(sharedPreference.getString("firsttime", "null") == "null") {
+                            val navController = rememberNavController()
+                            SetupNavGraph(navController = navController, this)
+                        } else {
+                            val mainIntent = Intent(this, MainScreenActivity::class.java)
+                            startActivity(mainIntent)
+                        }
                     }
                 }
             }

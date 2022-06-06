@@ -1,5 +1,7 @@
 package com.example.zaptos.splash_navigation
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -20,14 +22,18 @@ import com.example.zaptos.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun AnimatedSplashScreen(navController: NavHostController) {
+fun AnimatedSplashScreen(navController: NavHostController, context: Context) {
     var startAnimation by remember {
         mutableStateOf(false)
     }
 
-    val firstTime = rememberSaveable {
-        mutableStateOf(true)
-    }
+//    val firstTime = rememberSaveable {
+//        mutableStateOf(true)
+//    }
+
+    val sharedPreference =  context.getSharedPreferences("PREFERENCE_NAME",Context.MODE_PRIVATE)
+    var editor = sharedPreference.edit()
+
 
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
@@ -39,14 +45,15 @@ fun AnimatedSplashScreen(navController: NavHostController) {
     LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(4000)
-        if(firstTime.value){
+        if(sharedPreference.getString("firsttime", "null") == "null"){
             navController.popBackStack()
             navController.navigate(SplashScreens.Home.route)
+            editor.putString("firsttime","False")
+            editor.commit()
         } else {
             navController.popBackStack()
             navController.navigate(SplashScreens.Login.route)
         }
-        firstTime.value = false
     }
     Splash(alpha = alphaAnim.value)
 }
