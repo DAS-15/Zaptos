@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.zaptos.splash_navigation.SplashScreens
+import com.example.zaptos.models.SplashScreens
 import com.example.zaptos.ui.theme.BGBlue
 import com.example.zaptos.ui.theme.DPColor
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -65,9 +65,14 @@ fun OnBoardingScreen(context: Context, navController: NavHostController) {
                 onClick = {
 //                    val loginIntent = Intent(context, LoginActivity::class.java)
 //                    context.startActivity(loginIntent)
+                    val sharedPreference =  context.getSharedPreferences("PREFERENCE_NAME",Context.MODE_PRIVATE)
+                    var editor = sharedPreference.edit()
+                    editor.putString("firsttimestart","False")
+                    editor.commit()
 
                     navController.popBackStack()
-                    navController.navigate(SplashScreens.Login.route)
+                    navController.navigate(SplashScreens.Register.route)
+
                 }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 0.dp), shape = RectangleShape,

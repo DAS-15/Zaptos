@@ -1,7 +1,6 @@
 package com.example.zaptos.splash_navigation
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -10,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -19,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.zaptos.R
+import com.example.zaptos.models.SplashScreens
 import kotlinx.coroutines.delay
 
 @Composable
@@ -45,14 +44,12 @@ fun AnimatedSplashScreen(navController: NavHostController, context: Context) {
     LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(4000)
-        if(sharedPreference.getString("firsttime", "null") == "null"){
+        if(sharedPreference.getString("firsttimestart", "null") == "null"){
             navController.popBackStack()
             navController.navigate(SplashScreens.Home.route)
-            editor.putString("firsttime","False")
-            editor.commit()
         } else {
             navController.popBackStack()
-            navController.navigate(SplashScreens.Login.route)
+            navController.navigate(SplashScreens.Register.route)
         }
     }
     Splash(alpha = alphaAnim.value)

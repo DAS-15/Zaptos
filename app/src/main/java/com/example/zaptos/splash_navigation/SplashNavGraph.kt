@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.zaptos.login_screen.LoginScreen
+import com.example.zaptos.login_screen.RegisterScreen
+import com.example.zaptos.models.SplashScreens
 import com.example.zaptos.onboarding.OnBoardingScreen
 
 @Composable
@@ -24,7 +26,10 @@ fun SetupNavGraph(
             OnBoardingScreen(navController = navController, context = context)
         }
         composable(route = SplashScreens.Login.route) {
-            LoginScreen(context = context)
+            LoginScreen(context = context, navController)
+        }
+        composable(route = SplashScreens.Register.route) {
+            RegisterScreen(context = context, navController)
         }
     }
 }

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "290565943104",
+    "project_id": "zaptosapp",
+    "storage_bucket": "zaptosapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290565943104:android:8ea283f82d79d0d25dd4a5",
+        "android_client_info": {
+          "package_name": "com.example.zaptos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290565943104-tn2kpj4ost0mt33b2516d2p8utkkj4mq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zaptos",
+            "certificate_hash": "8fc58b7b36f25f1445af342a8558106517b54770"
+          }
+        },
+        {
+          "client_id": "290565943104-aaqcn5blkltnqgj72ev5hcuu0hcsggku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmr0EF686iNMyVEqbHBs2wgW_i9bLbYcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290565943104-aaqcn5blkltnqgj72ev5hcuu0hcsggku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1",
+
+}

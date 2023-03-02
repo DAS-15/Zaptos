@@ -8,14 +8,18 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.example.docode.Repository.MainRepository
+import com.example.zaptos.models.SplashScreens
 import com.example.zaptos.splash_navigation.SetupNavGraph
 import com.example.zaptos.ui.theme.BGBlue
 import com.example.zaptos.ui.theme.ZaptosTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Job
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,17 +44,39 @@ class MainActivity : ComponentActivity() {
                             darkIcons = useDarkIcons
                         )
 
-                        val sharedPreference = getSharedPreferences("PREFERENCE_NAME",
-                            Context.MODE_PRIVATE)
-                        var editor = sharedPreference.edit()
+                        val sharedPreference = getSharedPreferences(
+                            "PREFERENCE_NAME",
+                            Context.MODE_PRIVATE
+                        )
 
-                        if(sharedPreference.getString("firsttime", "null") == "null") {
+                        val auth = Firebase.auth
+                        val currentUser = auth.currentUser
+
+                        if (currentUser != null) {
+                            val mainScreenIntent = Intent(this, MainScreenActivity::class.java)
+                            startActivity(mainScreenIntent)
+                        } else {
                             val navController = rememberNavController()
                             SetupNavGraph(navController = navController, this)
-                        } else {
-                            val mainIntent = Intent(this, MainScreenActivity::class.java)
-                            startActivity(mainIntent)
+
+                            if (sharedPreference.getString("loggedout", "null") == "true") {
+                                navController.popBackStack()
+                                navController.navigate(SplashScreens.Login.route)
+                            }
                         }
+
+//                        if(sharedPreference.getString("firsttimestart", "null") == "null") {
+//                            val navController = rememberNavController()
+//                            SetupNavGraph(navController = navController, this)
+//                        } else {
+////                            val mainIntent = Intent(this, MainScreenActivity::class.java)
+////                            startActivity(mainIntent)
+//
+//                            val navController = rememberNavController()
+//                            SetupNavGraph(navController = navController, this)
+//                            navController.popBackStack()
+//                            navController.navigate(SplashScreens.Login.route)
+//                        }
                     }
                 }
             }
